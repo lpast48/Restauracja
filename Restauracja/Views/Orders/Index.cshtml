@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Restauracja.Models.Order>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Otwarte zamówienia</h2>
+
+<p>
+    @Html.ActionLink("Stwórz nowe zamówienie", "Create",null, new { @class = "btn, btn-success" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Table)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderTime)
+        </th>
+        <td>
+            @Html.DisplayNameFor(model => model.Price)
+        </td>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Table)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price) zł
+        </td>
+        <td>
+            @Html.ActionLink("Dodaj potrawy", "../Order_Meal/Create", new { orderId = item.Id }, new { @class = "btn btn-success" })
+            @Html.ActionLink("Lista Potraw", "../Order_Meal/Index", new { orderId = item.Id }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Wystaw rachunek", "Delete", new { id = item.Id }, new { @class = "btn btn-warning" })
+        </td>
+    </tr>
+}
+
+</table>

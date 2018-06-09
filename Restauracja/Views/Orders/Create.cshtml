@@ -1,0 +1,60 @@
+﻿@model Restauracja.Models.Order
+
+@{
+    ViewBag.Title = "Nowe zamówienie";
+}
+
+<h2>Nowe zamówienie</h2>
+
+@if (ViewBag.Error == true)
+{
+    <div class="alert alert-danger" role="alert">
+        Wystąpił błąd podczas próby utworzenia.<br />
+        Spróbuj ponownie.
+    </div>
+    if (ViewBag.TableError == true)
+    {
+        <div class="alert alert-danger" role="alert">
+            Dla tego stolika jest już otwarty rachunek<br />
+        </div>
+    }
+}
+else if (ViewBag.Error == false)
+{
+    <div class="alert alert-success" role="alert">
+        Utworzono pomyślnie.
+        Przejdź do dodawania potraw.
+    </div>
+}
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Table, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Table, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Table, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @if (ViewBag.Error != false)
+        {
+            <input type="submit" value="Utwórz" class="btn btn-success" />
+        }
+        else
+        {
+            @Html.ActionLink("Dodaj potrawy", "../Order_Meal/Create", new { orderId = ViewBag.ZamowienieId }, new { @class = "btn btn-success" })
+        }
+
+        @Html.ActionLink("Powrót", "Index", null, new { @class = "btn btn-primary" })
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

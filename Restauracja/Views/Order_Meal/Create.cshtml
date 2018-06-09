@@ -1,0 +1,42 @@
+﻿@model Restauracja.Models.Order_Meal
+
+@{
+    ViewBag.Title = "Dodaj";
+}
+
+<h2>Dodaj potrawę do zamówienia</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MealId, "Nazwa posiłku", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("MealId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Meal.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.Hidden("OrderId")
+                <input type="submit" value="Dodaj" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Lista zamówionych potraw", "Index", new { orderId = ViewBag.OrderId }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Lista zamówień", "../Orders/Index", null, new { @class = "btn btn-primary" })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,37 @@
+﻿@model Restauracja.Models.Order_Meal
+
+@{
+    ViewBag.Title = "Usuń";
+}
+
+<h3>Czy chcesz usunąć tę pozycję?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Meal.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Meal.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Meal.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Meal.Price)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Usuń" class="btn btn-danger" /> |
+            @Html.ActionLink("Powrót", "Index", new { orderId = Model.OrderId}, new{@class = "btn btn-primary"})
+        </div>
+    }
+</div>
